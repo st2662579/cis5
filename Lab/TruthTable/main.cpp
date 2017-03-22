@@ -1,7 +1,7 @@
 /* 
  * File:   main.cpp
  * Author: Seth Tyler
- * Created on February 14, 2017, 11:32 AM
+ * Created on March 22, 2017, 1:02 PM
  * Purpose:  Truth Table
  */
 
