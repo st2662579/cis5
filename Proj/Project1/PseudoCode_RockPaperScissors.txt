@@ -1,0 +1,84 @@
+/* 
+ * File:   main.cpp
+ * Author: Seth Tyler
+ * Created on April 16, 2017, 6:06 PM
+ * Purpose:  Rock paper scissors
+ */
+
+//System Libraries
+
+// Input/Output Library
+// Format Library
+// Math library
+// String library
+// File stream library
+
+//Namespace std of system libraries
+
+//User Libraries
+
+//Global Constants
+//Float comparison
+//Intro string
+
+//Function Prototypes
+// Convert input function, changes char to int and outputs accordingly
+// Determine winner function, determines which player won via rock, paper or scissors
+
+// Main -> Executable code begins here
+    
+    // Declare variables
+    // Such as playAgain variable and player inputs
+    
+    // While loop that resets scores to 0
+  
+    // Play the game by looping until playAgain is false
+        
+        // Read the number of matches played from a text file, increment it and output the number of matches played.
+        
+        // Declare variables
+        // Player 1's score, Player2's score, best of x games
+        
+        // Introduction
+        // Output a welcome to the game and ask how many games to play (best of 3 or 5)
+        
+        // Determine how many games will be played
+        // Read user input and set bestOf to number of games according to input
+        
+        // Output a confirmation of how many games are being played
+        
+        // Loop until matches have finished
+            // Check if a player has won
+            
+            // Declare ratio variables. If one becomes 0.5 or greater, that player wins.
+            
+            // Check if a player has the best of 3 or best of 5
+                
+               // Output the ratios
+                
+                // Output the match numbers
+                
+                // Inputs
+
+                // Tell player1 to input, receive input. Tell player2 to input. Receive input.
+                
+                
+                
+                // Determine the winner
+                // Call the winner function and write to roundWinner variables
+                
+                // Output the winner
+                // Use roundWinner variable to determine the winner. If 0, it's a tie. If 1, player 1 wins. If 2, player 2 wins.
+                // Increase the score accordingly or decrease match number if it's a tie.
+
+        
+        // Conclude
+        // Output who the winner is
+        
+        // Ask the user if they want to play again.
+        // Read input
+
+        // If input is Y/y, set playAgain to true and repeat the game.
+
+// Close files and exit stage right!
+
