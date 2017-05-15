@@ -7,10 +7,6 @@
 
 //System Libraries
 #include <iostream>  //Input - Output Library
-#include <math.h> // Math Library
-#include <string> // String Library
-#include <iomanip> // Formatting Library
-#include <stdlib.h> 
 
 using namespace std; //Name-space under which system libraries exist
 
