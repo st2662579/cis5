@@ -2,7 +2,7 @@
  * File:   main.cpp
  * Author: Seth Tyler
  * Created on May 14, 4:15 PM
- * Purpose:  Problem 1
+ * Purpose:  Problem 2
  */
 
 //System Libraries
@@ -26,7 +26,8 @@ int main(int argc, char** argv) {
     string months[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     float averageRain;
     float totalRain = 0;
-    int highest, lowest;
+    int highest = 0;
+    int lowest = 0;
     
     for (int month = 0; month < 12; month++) {
         int thisValue;
@@ -38,9 +39,9 @@ int main(int argc, char** argv) {
         } else {
             cout << endl;
             rainfall[month] = thisValue;
-            if (thisValue < lowest) {
+            if (thisValue < rainfall[lowest]) {
                 lowest = month;
-            } else if (thisValue > highest) {
+            } else if (thisValue > rainfall[highest]) {
                 highest = month;
             }
             totalRain = totalRain + thisValue;
