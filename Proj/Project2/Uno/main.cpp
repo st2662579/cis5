@@ -30,19 +30,19 @@ int main(int argc, char** argv) {
     int number[19] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9};
     vector<vector<int> > cards;
     
-    for (int colors = 1; colors<=4; colors++) {
+    for (int color = 1; color<=4; color++) {
         /*
          Red = 1;
          Green = 2;
          Yellow = 3;
          Blue = 4;
          */
-        for (int n = 0; n<=19; n++) {
-            vector<int> newCard(2);
-            newCard.push_back(colors);
+        for (int n = 0; n<19; n++) {
+            vector<int> newCard;
+            newCard.push_back(color);
             newCard.push_back(number[n]);
             cards.push_back(newCard);
-            newCard.clear();
+            //newCard.clear();
         }
     }
     
