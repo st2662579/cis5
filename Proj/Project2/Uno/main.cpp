@@ -22,99 +22,9 @@ using namespace std; //Name-space under which system libraries exist
 //User Libraries
 
 //Function Prototypes
-string getColor(int id) { // Return the color (string) of the card based on the numerical ID
-    string color;
-    switch (static_cast<int>(id)) {
-        case 1:
-            color = "RED";
-            break;
-        case 2:
-            color = "GREEN";
-            break;
-        case 3:
-            color = "YELLOW";
-            break;
-        case 4:
-            color = "BLUE";
-            break;       
-    }
-    return color;
-}
-
-string convert(int card[2]) { // Convert the card array to a user-friendly readable form
-    string color;
-    string type;
-    
-    if (card[0] <= 4) { // Check if the card is a normal number card
-        color = getColor(card[0]);
-        switch (card[1]) {
-            case 0:
-                type = "0";
-                break;
-            case 1:
-                type = "1";
-                break;
-            case 2:
-                type = "2";
-                break;
-            case 3:
-                type = "3";
-                break;
-            case 4:
-                type = "4";
-                break;
-            case 5:
-                type = "5";
-                break;
-            case 6:
-                type = "6";
-                break;
-            case 7:
-                type = "7";
-                break;
-            case 8:
-                type = "8";
-                break;
-            case 9:
-                type = "9";
-                break;
-        }
-    } else if (card[0] >= 5 && card[0] < 7) { // Check if the card is a special card
-        color = getColor(card[1]);
-        type = (card[0] == 5 ? "SKIP" : "DRAW TWO");
-    }
-    return (color + " " + type);
-}
-
-bool verify(int card[2], int match[2]) { // Verify if the user can play a card based on the discard card
-    bool allow = false;
-    int color1, color2;
-    int number1, number2;
-    
-    if (card[0] <= 4) { // If the card is a normal number card
-        color1 = card[0];
-        number1 = card[1];
-    } else if (card[0] < 7) { // If the card is a draw two or skip card
-        color1 = card[1];
-        number1 = (card[0] == 6 ? 10 : 11);
-    }
-    
-    if (match[0] <= 4) { // If the card is a normal number card
-        color2 = match[0];
-        number2 = match[1];
-    } else if (match[0] < 7) { // If the card is a draw two or skip card
-        color2 = match[1];
-        number2 = (match[0] == 6 ? 10 : 11);
-    }
-    
-    if (color1 == color2) { // Do the colors match?
-        allow = true;
-    } else if (number1 == number2) { // Do the numbers match?
-        allow = true;
-    }
-    
-    return allow;
-}
+string getColor(int id);
+string convert(int card[2]);
+bool verify(int card[2], int match[2]);
 
 //Execution begins here
 int main(int argc, char** argv) {
@@ -340,4 +250,100 @@ int main(int argc, char** argv) {
     } while (playAgain == true);
 
     return 0;
+}
+
+// Functions
+
+string getColor(int id) { // Return the color (string) of the card based on the numerical ID
+    string color;
+    switch (static_cast<int>(id)) {
+        case 1:
+            color = "RED";
+            break;
+        case 2:
+            color = "GREEN";
+            break;
+        case 3:
+            color = "YELLOW";
+            break;
+        case 4:
+            color = "BLUE";
+            break;       
+    }
+    return color;
+}
+
+string convert(int card[2]) { // Convert the card array to a user-friendly readable form
+    string color;
+    string type;
+    
+    if (card[0] <= 4) { // Check if the card is a normal number card
+        color = getColor(card[0]);
+        switch (card[1]) {
+            case 0:
+                type = "0";
+                break;
+            case 1:
+                type = "1";
+                break;
+            case 2:
+                type = "2";
+                break;
+            case 3:
+                type = "3";
+                break;
+            case 4:
+                type = "4";
+                break;
+            case 5:
+                type = "5";
+                break;
+            case 6:
+                type = "6";
+                break;
+            case 7:
+                type = "7";
+                break;
+            case 8:
+                type = "8";
+                break;
+            case 9:
+                type = "9";
+                break;
+        }
+    } else if (card[0] >= 5 && card[0] < 7) { // Check if the card is a special card
+        color = getColor(card[1]);
+        type = (card[0] == 5 ? "SKIP" : "DRAW TWO");
+    }
+    return (color + " " + type);
+}
+
+bool verify(int card[2], int match[2]) { // Verify if the user can play a card based on the discard card
+    bool allow = false;
+    int color1, color2;
+    int number1, number2;
+    
+    if (card[0] <= 4) { // If the card is a normal number card
+        color1 = card[0];
+        number1 = card[1];
+    } else if (card[0] < 7) { // If the card is a draw two or skip card
+        color1 = card[1];
+        number1 = (card[0] == 6 ? 10 : 11);
+    }
+    
+    if (match[0] <= 4) { // If the card is a normal number card
+        color2 = match[0];
+        number2 = match[1];
+    } else if (match[0] < 7) { // If the card is a draw two or skip card
+        color2 = match[1];
+        number2 = (match[0] == 6 ? 10 : 11);
+    }
+    
+    if (color1 == color2) { // Do the colors match?
+        allow = true;
+    } else if (number1 == number2) { // Do the numbers match?
+        allow = true;
+    }
+    
+    return allow;
 }
