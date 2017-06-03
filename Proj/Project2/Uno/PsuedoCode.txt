@@ -1,0 +1,117 @@
+// Libraries
+
+// getColor function
+	// return "RED" for 1;
+	// return "GREEN" for 2;
+	// return "YELLOW" for 3;
+	// return "BLUE" for 4;
+
+// convert function
+	// if the card is a normal number card
+		// use the getColor function to grab the color and also return the number
+	// else if the card is a special card
+		// obtain the color and return if it is a skip or draw two
+
+// verify function
+	// if the card being played is a normal number card
+		// set variables color1 and number1
+	// else if it is a special card
+		// set variables color1 and number1
+	// if the discard card is a normal number card
+		// set variables color2 and number2
+	// else if it is a special card
+		// set variables color2 and number2
+
+	// check if color or number variables match
+
+	// return allow
+
+// int main
+
+	// initialize variables
+	// do loop
+		// set random seed
+		// initialize vectors for card decks
+
+		// for loop, cycle through colors
+			// for loop, cycle through numbers
+				// add to the deck
+			
+			// for loop, cycle through special cards
+				// for loop, cycle through types
+					// add to the deck
+
+		// shuffle the cards vector
+
+		// for loop, cycle between player and cpu
+			// for loop, cycle 7 times for each card
+				// deal a random card
+
+		// Output "Welcome to UNO!"
+
+		// Take out an element from the cards vector and place it in the discard vector
+
+		// while loop for gamePlay being true
+			// switch turns with ourTurn variable
+			
+			// create an array for the discard card to output what it is in readable form
+
+			// check if it is the player's turn
+				// output the player's deck (use a for loop to cycle through the playerCards vector)
+
+				// verify if any of the player's cards can be played with another for loop
+					// call verify function and set canPlay to true if true
+
+				// if canPlay
+					// Output asking what card they want to play, accept input
+
+					// while loop to verify input, cycle if invalid input
+				
+					// create an array for the card the player chose
+					// call verify to check if it is a valid card
+					
+					// while loop until validCard is true
+
+					// if skip card
+						// skip cpu's turn
+					// if draw two card
+						// add two card's to cpuCard's vector
+
+					// add a card to the discard vector
+					// take a card from the playerCards vector
+
+					// if playerCards size is 0, they have no cards and they win.
+						// set gamePlay to false and winner to 0
+
+				// if not canPlay
+					// take a card from the cards vector, push it into the playerCard's vector and go to the CPU's turn
+
+			// if it is the cpu's turn
+				// for loop checking if any cards are able to be played, then set cardToPlay if there is a card
+
+				// if canPlay
+
+					// if skip card
+						// skip cpu's turn
+					// if draw two card
+						// add two card's to cpuCard's vector
+					// else
+						// output what card they played
+
+					// add a card to the discard vector
+					// take a card from the cpuCards vector
+
+					// if cpuCards size is 0, they have no cards and they win.
+						// set gamePlay to false and winner to 1
+
+				// if not canPlay
+					// take a card from the cards vector, push it into the cpuCard's vector and go to the player's turn
+
+
+
+			// output the winner based on winner variable being 0 or 1
+
+			// ask to play again
+
+			// if input is Y or Y, set playAgain to true
+
