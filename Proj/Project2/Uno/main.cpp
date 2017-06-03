@@ -23,7 +23,7 @@ using namespace std; //Name-space under which system libraries exist
 
 //Function Prototypes
 string getColor(int id);
-string getColor(int id) { // Return the color (string) of the card based on the numerical ID
+string getColor(int id = 1) { // Return the color (string) of the card based on the numerical ID
     string color;
     switch (static_cast<int>(id)) {
         case 1:
