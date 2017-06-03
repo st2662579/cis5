@@ -14,6 +14,8 @@
 #include <vector>
 #include <stdlib.h>
 #include <ctime>
+#include<limits>
+#include <algorithm>
 
 using namespace std; //Name-space under which system libraries exist
 
@@ -80,11 +82,38 @@ string convert(int card[2]) {
     } else if (card[0] >= 5 && card[0] < 7) {
         color = getColor(card[1]);
         type = (card[0] == 5 ? "SKIP" : "DRAW TWO");
-    } else {
-        color = "WILD";
-        type = (card[0] == 7 ? "" : "DRAW FOUR");
     }
     return (color + " " + type);
+}
+
+bool verify(int card[2], int match[2]) {
+    bool allow = false;
+    int color1, color2;
+    int number1, number2;
+    
+    if (card[0] <= 4) { // If the card is a normal number card
+        color1 = card[0];
+        number1 = card[1];
+    } else if (card[0] < 7) { // If the card is a draw two or skip card
+        color1 = card[1];
+        number1 = (card[0] == 6 ? 10 : 11);
+    }
+    
+    if (match[0] <= 4) { // If the card is a normal number card
+        color2 = match[0];
+        number2 = match[1];
+    } else if (match[0] < 7) { // If the card is a draw two or skip card
+        color2 = match[1];
+        number2 = (match[0] == 6 ? 10 : 11);
+    }
+    
+    if (color1 == color2) {
+        allow = true;
+    } else if (number1 == number2) {
+        allow = true;
+    }
+    
+    return allow;
 }
 
 //Execution begins here
@@ -98,7 +127,7 @@ int main(int argc, char** argv) {
     // Variables for playing again
     bool playAgain = false; // if true, the loop will continue
     char repeat; // user input for settings playAgain to true or false
-    
+    int winner;
     int cardChosen;
     
     do {
@@ -128,14 +157,12 @@ int main(int argc, char** argv) {
             }
 
             // Insert special cards
-            for (int type = 5; type<=8; type++) {
+            for (int type = 5; type<=6; type++) {
                 /*
                  * 5 = Skip
                  * 6 = Draw Two
-                 * 7 = Wild
-                 * 8 = Wild Draw Four
                  */
-                for (int amount = 1; amount<=(type < 7 ? 2 : 1); amount++) {
+                for (int amount = 1; amount<=2; amount++) {
                     vector<int> specialCard;
                     specialCard.push_back(type);
                     specialCard.push_back(color);
@@ -143,6 +170,8 @@ int main(int argc, char** argv) {
                 }
             }
         }
+        
+        random_shuffle(cards.begin(), cards.end());
 
         // Deal cards to player and CPU
         for (int user = 0; user <= 1; user++) {
@@ -161,32 +190,126 @@ int main(int argc, char** argv) {
         }
     
         cout << "### Welcome to UNO! ###\n";
-        cout << "Here is your deck! ...\n";
-        
-        for (int card = 0; card < 7; card++) {
-            int thisCard[2] = {playerCards[card][0], playerCards[card][1]};
-            cout << (card + 1) << ". " << convert(thisCard) << endl;
-        }
-        
-        cout << endl;
         
         // Take a card out from the deck and place it in the discard pile
         discard.push_back(cards[0]);
         cards.erase(cards.begin());
         
-        int thisCard[2] = {discard[0][0], discard[0][1]};
-        cout << "The top discard card is a " << convert(thisCard) << endl;
-        cout << "What card would you like to play? (1-7): ";
+        bool ourTurn = false;
+        bool gamePlay = true;
         
-        cin >> cardChosen;
+        while (gamePlay) {
+            ourTurn = !ourTurn;
+            int thisCard[2] = {discard[discard.size() - 1][0], discard[discard.size() - 1][1]};
+            cout << endl << "The top discard card is a " << convert(thisCard) << endl;
+            
+            if (ourTurn) {
+                
+                cout << "Here is your deck! ...\n\n";
+                
+                for (int c = 0; c < playerCards.size(); c++) {
+                    int showCard[2] = {playerCards[c][0], playerCards[c][1]};
+                    cout << (c + 1) << ". " << convert(showCard) << endl;
+                }
+                
+                bool canPlay = false;
+                
+                for (int c = 0; c < playerCards.size(); c++) {
+                    int chkCard[2] = {playerCards[c][0], playerCards[c][1]};
+                    if (verify(chkCard, thisCard)) {
+                        canPlay = true;
+                    }
+                }
+                
+                if (canPlay) {
+                    cout << endl << "What card would you like to play? (1-7): ";
+                    cin >> cardChosen;
+                    
+                    while ((cardChosen < 1) || (cardChosen) > playerCards.size()) {
+                        cout << endl << "This card is invalid. Please choose another one: ";
+                        cin >> cardChosen;
+                    }        
+                    cout << endl;
+                    
+                    int cardArray[2] = {playerCards[cardChosen - 1][0], playerCards[cardChosen - 1][1]};
+                    bool validCard = (verify(cardArray, thisCard));
+                    while (!validCard) {
+                        cout << endl << "This card cannot be played. Try to match the numbers or colors and select a new card: ";
+                        cin >> cardChosen;
+                        int cardArray[2] = {playerCards[cardChosen - 1][0], playerCards[cardChosen - 1][1]};
+                        validCard = (verify(cardArray, thisCard));
+                    }
+                    
+                    
+                    if (cardArray[0] == 5) {
+                        ourTurn = !ourTurn;
+                        cout << endl << "### Skipping CPU's turn! ###\n";
+                    } else if (cardArray[0] == 6) {
+                        cpuCards.push_back(cards[cards.size()]);
+                        cpuCards.push_back(cards[cards.size()]);
+                        cout << endl << "### CPU drew two cards. ###\n";
+                    } else {
+                        cout << endl << "### You played a " << convert(cardArray) << " ###" << endl;
+                    }
+                    
+                    discard.push_back(playerCards[cardChosen -1]);
+                    playerCards.erase(playerCards.begin() + (cardChosen - 1));
+                    
+                    if (playerCards.size() == 0) {
+                        gamePlay = false;
+                        winner = 0;
+                    }
+                    
+                } else {
+                    cout << "None of your cards were playable. Drawing and skipping your turn.";
+                    cards.erase(cards.begin() + cards.size());
+                    playerCards.push_back(cards[cards.size()]);
+                }
+            } else { // If it is the CPU's turn.
+                bool canPlay = false;
+                int cardToPlay;
+                
+                for (int c = 0; c < cpuCards.size(); c++) {
+                    int chkCard[2] = {cpuCards[c][0], cpuCards[c][1]};
+                    if (verify(chkCard, thisCard)) {
+                        canPlay = true;
+                        cardToPlay = c;
+                    }
+                }
+                
+                if (canPlay) {
+                    
+                    int cardArray[2] = {cpuCards[cardToPlay][0], cpuCards[cardToPlay][1]};
+                    
+                    if (cardArray[0] == 5) {
+                        ourTurn = !ourTurn;
+                        cout << endl << "### The CPU skipped your turn. ###\n";
+                    } else if (cardArray[0] == 6) {
+                        playerCards.push_back(cards[cards.size()]);
+                        playerCards.push_back(cards[cards.size()]);
+                        cout << endl << "### The CPU played draw two. ###\n";
+                    } else {
+                        cout << endl << "### CPU played a " << convert(cardArray) << " ###" << endl;
+                    }
+                    
+                    discard.push_back(cpuCards[cardToPlay]);
+                    cpuCards.erase(cpuCards.begin() + cardToPlay);
+                    
+                    if (cpuCards.size() == 0) {
+                        gamePlay = false;
+                        winner = 1;
+                    }
+                } else {
+                    cout << endl << "The CPU was unable to play. Skipping to your turn.\n";
+                    cards.erase(cards.begin() + cards.size());
+                    cpuCards.push_back(cards[cards.size()]);
+                } 
+            }
+        }
         
-        while ((cardChosen < 1) || (cardChosen) > playerCards.size()) {
-            cout << endl << "This card is invalid. Please choose another one: ";
-            cin >> cardChosen;
-        }        
-        cout << endl;
+        cout << (winner == 0 ? "You " : "The CPU ") << "won!" << endl;
+        
 
-        
         // Ask the user if they want to play again.
         cout << "Play again? (Y/N)\n";
         cin >> repeat;
