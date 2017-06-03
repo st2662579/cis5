@@ -99,6 +99,8 @@ int main(int argc, char** argv) {
     bool playAgain = false; // if true, the loop will continue
     char repeat; // user input for settings playAgain to true or false
     
+    int cardChosen;
+    
     do {
         srand(time(NULL));
 
@@ -174,9 +176,16 @@ int main(int argc, char** argv) {
         
         int thisCard[2] = {discard[0][0], discard[0][1]};
         cout << "The top discard card is a " << convert(thisCard) << endl;
-        cout << "What card would you like to play?";
-
+        cout << "What card would you like to play? (1-7): ";
+        
+        cin >> cardChosen;
+        
+        while ((cardChosen < 1) || (cardChosen) > playerCards.size()) {
+            cout << endl << "This card is invalid. Please choose another one: ";
+            cin >> cardChosen;
+        }        
         cout << endl;
+
         
         // Ask the user if they want to play again.
         cout << "Play again? (Y/N)\n";
